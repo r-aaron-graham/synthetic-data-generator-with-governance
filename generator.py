@@ -13,7 +13,7 @@ from faker import Faker
 # to avoid circular dependencies and to keep the CLI at the top-level.  The
 # `write_dataset_card` function records metadata about the generated data to
 # assist with governance and documentation.
-from .utils import write_dataset_card
+from utils import write_dataset_card
 
 
 fake = Faker()
@@ -40,7 +40,7 @@ def generate_record():
 )
 @click.option(
     "--num-records",
-    type=int,
+    type=click.IntRange(min=0),
     default=100,
     show_default=True,
     help="Number of synthetic records to generate.",

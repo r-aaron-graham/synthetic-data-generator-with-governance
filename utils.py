@@ -6,7 +6,7 @@ from pathlib import Path
 
 def write_dataset_card(path, num_records, fields):
     """Create or update a dataset card with metadata about the generation."""
-    timestamp = datetime.datetime.utcnow().isoformat()
+    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
     card = "# Dataset Card\n\n"
     card += f"**Generated on:** {timestamp}\n\n"
     card += f"**Number of records:** {num_records}\n\n"
