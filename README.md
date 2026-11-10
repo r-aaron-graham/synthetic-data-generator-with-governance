@@ -1,30 +1,27 @@
-# Synthetic Data Generator with Governance
+# Synthetic data generator with metadata
 
-This repository provides tools to generate synthetic datasets while capturing governance
-metadata.  Synthetic data can be used for testing, training, and demos without exposing
-real user information.  The included generator uses the Faker library to produce realistic
-records and writes out a CSV file along with a data card describing the dataset.
+Generate a CSV of fictional records and a companion dataset card. The card
+records a UTC timestamp, row count, field descriptions, purpose, and generation
+method. The fixed schema contains ID, name, email, address, and signup date.
 
-## Features
-
-* Generate tabular data with configurable columns (e.g. names, emails, addresses, dates).
-* Capture metadata such as generation time, anonymization techniques, and intended use.
-* Output a dataset card (`dataset_card.md`) summarizing the data and governance considerations.
-
-## Usage
-
-Install dependencies and run the generator:
+## Run the example
 
 ```bash
-pip install -r requirements.txt
-python generator.py --output data.csv --num-records 100
+python -m pip install -r requirements.txt
+python generator.py --num-records 3 --output output/data.csv
 ```
 
-The script will produce `data.csv` with 100 synthetic records and create/update
-`dataset_card.md` with metadata about the generation run.
+The command writes three data rows plus a header to `output/data.csv` and
+creates `output/dataset_card.md`. Values and dates vary between runs.
+Use the generated records as fixtures for demos and validation experiments.
+Record generation uses Faker rather than anonymizing an input dataset.
 
-## Extending
+## Verify
 
-To add new fields, modify the `generate_record` function in `generator.py`.  For
-governance, you can expand the dataset card to include information such as data sources,
-legal considerations, and privacy guarantees.
+```bash
+python -m pip install pytest
+python -m pytest -q
+```
+
+The tests check the documented CLI, nested output directories, row counts,
+the dataset card, and rejection of negative counts before output is written.
