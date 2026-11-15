@@ -25,3 +25,16 @@ python -m pytest -q
 
 The tests check the documented CLI, nested output directories, row counts,
 the dataset card, and rejection of negative counts before output is written.
+
+## Deployment verification
+
+Use Python 3.12 on Linux. CI and Docker apply the checked-in dependency constraints.
+
+```sh
+python -m pip install -c requirements.lock -r requirements-dev.txt
+python -m pytest -q
+docker build -t reviewer-smoke .
+docker run --rm reviewer-smoke
+```
+
+Expected result: three fictional data rows and a dataset card. The container writes disposable output under `/tmp`.
